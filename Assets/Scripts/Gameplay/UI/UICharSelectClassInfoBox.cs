@@ -32,6 +32,8 @@ namespace Unity.BossRoom.Gameplay.UI
         [SerializeField]
         private Image m_Skill3;
         [SerializeField]
+        private Image m_Skill4;
+        [SerializeField]
         private Image m_ReadyButtonImage;
         [SerializeField]
         private GameObject m_Checkmark;
@@ -76,6 +78,7 @@ namespace Unity.BossRoom.Gameplay.UI
             ConfigureSkillIcon(m_Skill1, characterClass.Skill1);
             ConfigureSkillIcon(m_Skill2, characterClass.Skill2);
             ConfigureSkillIcon(m_Skill3, characterClass.Skill3);
+            ConfigureSkillIcon(m_Skill4, characterClass.Skill4);
         }
 
         private void ConfigureSkillIcon(Image iconSlot, Action action)

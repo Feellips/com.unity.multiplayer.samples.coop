@@ -108,11 +108,15 @@ namespace Unity.BossRoom.Gameplay.UserInput
         [SerializeField]
         PhysicsWrapper m_PhysicsWrapper;
 
+        public ActionState actionState0 { get; private set; }
+        
         public ActionState actionState1 { get; private set; }
 
         public ActionState actionState2 { get; private set; }
 
         public ActionState actionState3 { get; private set; }
+        
+        public ActionState actionState4 { get; private set; }
 
         public System.Action action1ModifiedCallback;
 
@@ -135,6 +139,11 @@ namespace Unity.BossRoom.Gameplay.UserInput
             m_ServerCharacter.TargetId.OnValueChanged += OnTargetChanged;
             m_ServerCharacter.HeldNetworkObject.OnValueChanged += OnHeldNetworkObjectChanged;
 
+            if (CharacterClass.Skill0 &&
+                GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill0.ActionID, out var action0))
+            {
+                actionState0 = new ActionState() { actionID = action0.ActionID, selectable = true };
+            }
             if (CharacterClass.Skill1 &&
                 GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill1.ActionID, out var action1))
             {
@@ -149,6 +158,11 @@ namespace Unity.BossRoom.Gameplay.UserInput
                 GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill3.ActionID, out var action3))
             {
                 actionState3 = new ActionState() { actionID = action3.ActionID, selectable = true };
+            }
+            if (CharacterClass.Skill4 &&
+                GameDataSource.Instance.TryGetActionPrototypeByID(CharacterClass.Skill4.ActionID, out var action4))
+            {
+                actionState4 = new ActionState() { actionID = action4.ActionID, selectable = true };
             }
 
             m_GroundLayerMask = LayerMask.GetMask(new[] { "Ground" });
@@ -497,20 +511,29 @@ namespace Unity.BossRoom.Gameplay.UserInput
             {
                 RequestAction(actionState3.actionID, SkillTriggerStyle.KeyboardRelease);
             }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                RequestAction(actionState4.actionID, SkillTriggerStyle.Keyboard);
+            }
+            else if (Input.GetKeyUp(KeyCode.Alpha4))
+            {
+                RequestAction(actionState4.actionID, SkillTriggerStyle.KeyboardRelease);
+            }
 
-            if (Input.GetKeyDown(KeyCode.Alpha5))
+            if (Input.GetKeyDown(KeyCode.Alpha6))
             {
                 RequestAction(GameDataSource.Instance.Emote1ActionPrototype.ActionID, SkillTriggerStyle.Keyboard);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha6))
+            if (Input.GetKeyDown(KeyCode.Alpha7))
             {
                 RequestAction(GameDataSource.Instance.Emote2ActionPrototype.ActionID, SkillTriggerStyle.Keyboard);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha7))
+            if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 RequestAction(GameDataSource.Instance.Emote3ActionPrototype.ActionID, SkillTriggerStyle.Keyboard);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha8))
+            if (Input.GetKeyDown(KeyCode.Alpha9))
             {
                 RequestAction(GameDataSource.Instance.Emote4ActionPrototype.ActionID, SkillTriggerStyle.Keyboard);
             }
@@ -522,7 +545,7 @@ namespace Unity.BossRoom.Gameplay.UserInput
 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    RequestAction(CharacterClass.Skill1.ActionID, SkillTriggerStyle.MouseClick);
+                    RequestAction(CharacterClass.Skill0.ActionID, SkillTriggerStyle.MouseClick);
                 }
 
                 if (Input.GetMouseButtonDown(0))

@@ -14,6 +14,9 @@ namespace Unity.BossRoom.Gameplay.Configuration
     {
         [Tooltip("which character this data represents")]
         public CharacterTypeEnum CharacterType;
+        
+        [Tooltip("default attack")]
+        public Action Skill0;
 
         [Tooltip("skill1 is usually the character's default attack")]
         public Action Skill1;
@@ -23,6 +26,9 @@ namespace Unity.BossRoom.Gameplay.Configuration
 
         [Tooltip("skill3 is usually the character's unique or special attack")]
         public Action Skill3;
+        
+        [Tooltip("skill4 is usually the character's unique or special attack")]
+        public Action Skill4;
 
         [Tooltip("Starting HP of this character class")]
         public IntVariable BaseHP;

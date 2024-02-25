@@ -30,6 +30,11 @@ namespace Unity.BossRoom.Gameplay.GameplayObjects.Character.AI
         public override void Initialize()
         {
             m_AttackActions = new List<Action>();
+            
+            if (m_Brain.CharacterData.Skill0 != null)
+            {
+                m_AttackActions.Add(m_Brain.CharacterData.Skill0);
+            }
             if (m_Brain.CharacterData.Skill1 != null)
             {
                 m_AttackActions.Add(m_Brain.CharacterData.Skill1);
@@ -42,7 +47,11 @@ namespace Unity.BossRoom.Gameplay.GameplayObjects.Character.AI
             {
                 m_AttackActions.Add(m_Brain.CharacterData.Skill3);
             }
-
+            if (m_Brain.CharacterData.Skill4 != null)
+            {
+                m_AttackActions.Add(m_Brain.CharacterData.Skill4);
+            }
+            
             // pick a starting attack action from the possible
             m_CurAttackAction = m_AttackActions[Random.Range(0, m_AttackActions.Count)];
 

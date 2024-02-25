@@ -26,6 +26,10 @@ namespace Unity.BossRoom.Gameplay.UI
         [SerializeField]
         [Tooltip("The button that activates the hero's second special move")]
         UIHUDButton m_SpecialAction2Button;
+        
+        [SerializeField]
+        [Tooltip("The button that activates the hero's third special move")]
+        UIHUDButton m_SpecialAction3Button;
 
         [SerializeField]
         [Tooltip("The button that opens/closes the Emote bar")]
@@ -48,6 +52,7 @@ namespace Unity.BossRoom.Gameplay.UI
             BasicAction,
             Special1,
             Special2,
+            Special3,
             EmoteBar,
         }
 
@@ -144,6 +149,13 @@ namespace Unity.BossRoom.Gameplay.UI
                 GameDataSource.Instance.TryGetActionPrototypeByID(m_InputSender.actionState3.actionID, out action3);
             }
             UpdateActionButton(m_ButtonInfo[ActionButtonType.Special2], action3);
+            
+            Action action4 = null;
+            if (m_InputSender.actionState4 != null)
+            {
+                GameDataSource.Instance.TryGetActionPrototypeByID(m_InputSender.actionState4.actionID, out action4);
+            }
+            UpdateActionButton(m_ButtonInfo[ActionButtonType.Special3], action4);
         }
 
         void Action1ModifiedCallback()
@@ -171,6 +183,7 @@ namespace Unity.BossRoom.Gameplay.UI
                 [ActionButtonType.BasicAction] = new ActionButtonInfo(ActionButtonType.BasicAction, m_BasicActionButton, this),
                 [ActionButtonType.Special1] = new ActionButtonInfo(ActionButtonType.Special1, m_SpecialAction1Button, this),
                 [ActionButtonType.Special2] = new ActionButtonInfo(ActionButtonType.Special2, m_SpecialAction2Button, this),
+                [ActionButtonType.Special3] = new ActionButtonInfo(ActionButtonType.Special3, m_SpecialAction3Button, this),
                 [ActionButtonType.EmoteBar] = new ActionButtonInfo(ActionButtonType.EmoteBar, m_EmoteBarButton, this),
             };
 
@@ -204,7 +217,7 @@ namespace Unity.BossRoom.Gameplay.UI
 
         void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Alpha4))
+            if (Input.GetKeyUp(KeyCode.Alpha5))
             {
                 m_ButtonInfo[ActionButtonType.EmoteBar].Button.OnPointerUpEvent.Invoke();
             }

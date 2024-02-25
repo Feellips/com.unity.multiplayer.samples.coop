@@ -29,6 +29,8 @@ namespace Unity.BossRoom.Gameplay.Actions
                 m_TargetTransform = physicsWrapper.Transform;
             }
 
+            if (!m_TargetTransform) return false;
+            
             if (Config.Projectiles.Length < 1 || Config.Projectiles[0].ProjectilePrefab == null)
                 throw new System.Exception($"Action {name} has no valid ProjectileInfo!");
 
@@ -37,11 +39,9 @@ namespace Unity.BossRoom.Gameplay.Actions
 
         public override bool OnUpdateClient(ClientCharacter clientCharacter)
         {
-            if (TimeRunning >= Config.ExecTimeSeconds && m_Projectile == null)
+            if (TimeRunning >= Config.ExecTimeSeconds && m_Projectile == null && m_TargetTransform)
             {
-                // figure out how long the pretend-projectile will be flying to the target
-                var targetPos = m_TargetTransform ? m_TargetTransform.position : Data.Position;
-                var initialDistance = Vector3.Distance(targetPos, clientCharacter.transform.position);
+                var initialDistance = Vector3.Distance(m_TargetTransform.position, clientCharacter.transform.position);
                 m_ProjectileDuration = initialDistance / Config.Projectiles[0].Speed_m_s;
 
                 // create the projectile. It will control itself from here on out

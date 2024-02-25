@@ -25,8 +25,9 @@ namespace Unity.BossRoom.Gameplay.Actions
         {
             m_DamageableTarget = GetDamageableTarget(serverCharacter);
 
-            // figure out where the player wants us to aim at...
-            Vector3 targetPos = m_DamageableTarget != null ? m_DamageableTarget.transform.position : m_Data.Position;
+            if (m_DamageableTarget == null) return false;
+            
+            Vector3 targetPos = m_DamageableTarget.transform.position;
 
             // then make sure we can actually see that point!
             if (!ActionUtils.HasLineOfSight(serverCharacter.physicsWrapper.Transform.position, targetPos, out Vector3 collidePos))
